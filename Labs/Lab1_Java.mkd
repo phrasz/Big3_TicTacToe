@@ -1,0 +1,44 @@
+% A Game Development Process: With Java, Git, and Tic-Tac-Toe
+% Phrasz
+% July 30, 2013
+
+<!-- pandoc -V geometry:paperwidth=8in -V geometry:paperheight=11in -V geometry:margin=1in Lab1_Java.mkd -o "Lab1 Java.pdf" --number-sections !-->
+
+Introduction
+============
+The following document will guide you through a step-by-step "game development process". NO JAVA EXPERIENCE IS NEEDED! However, several prerequisite programs will be needed for completion of this lab. The goal of this lab is to 1) show an example Java game, 2) re-enforce utilizing a local and remote Version Control System (VCS), and 3) renforcing the use of a VCS during active game development. Throughout this lab you will be expected to go from a code editor, to command-line/terminal, to a web browser and back. Fear not and read all directions. May the Force be with you!
+
+Prerequisite "Programs"
+=======================
+1. A Text Editor (I recommend [Notepad++]).
+2. [Java Development Kit 7]
+3. [Git Version Control System] for a VCS
+4. A [GitHub] account
+
+\pagebreak
+
+Appendix A: The PATH Environment Variable
+=========================================
+## Operating System Environment Variables
+> "Environment variables are a set of dynamic named values that can affect the way running processes will behave on a computer. They are part of the operating environment in which a process runs.  They were introduced in their modern form in 1979 with Version 7 Unix, so are included in all Unix operating system flavors and variants from that point onward including Linux and OS X. From PC DOS 2.0 in 1982, all succeeding Microsoft operating systems including Microsoft Windows, and OS/2 also have included them as a feature, although with somewhat different syntax, usage and standard variable names."
+-- Wikipedia [1]
+
+## The "PATH" Environment Variables
+> "PATH is an environment variable on Unix-like operating systems, DOS, OS/2, and Microsoft Windows, specifying a set of directories where executable programs are located. In general, each executing process or user session has its own PATH setting."
+-- Wikipedia [2]
+\vfill
+
+
+
+[![Creative Commons License](./images/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/)  All work is under a Creative Commons BY-NC-SA 3.0 License
+
+
+<!-- Links !-->
+[Notepad++]:  http://notepad-plus-plus.org/download/v6.4.3.html
+[Java Development Kit 7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+[Git Version Control System]: http://git-scm.com/downloads
+[GitHub]: https://www.github.com
+
+<!-- Works Cited !-->
+[1]:http://en.wikipedia.org/wiki/Environment_variable
+[2]:http://en.wikipedia.org/wiki/PATH_(variable)

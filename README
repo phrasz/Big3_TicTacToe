@@ -1,0 +1,55 @@
+###############################################################################
+#				Tic Tac Toe: With the Big Three
+# I. Python
+# =========
+# Install Python:
+# 	1. http://www.python.org/getit/
+# 	2. Add Folder to Path (Example: C:\Python3#\)
+#
+# Source Example:
+#	1. http://www.cs.indiana.edu/classes/a202-dger/spr2007/notes/code/chap06/tic-tac-toe.py
+#		a. Have to convert "raw_input" to "input"; print "<stuff>" to print("<stuff>")
+#
+# Building/Execution: (trick!--python is compiled at runtime)
+#	1. Run: python <name>.py
+
+# II. Java
+# ========
+# Install Java:
+#	1. http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+#	2. Add jdk to Path, OR change the directory to the binary folder (ex: C:\<java path>\bin\) (See other instructions on PATH)
+#
+# Source Example:
+#	1. http://forum.codecall.net/topic/43209-java-source-code-tic-tac-toe-game/
+#
+# Building/Execution
+# 	1. Compile: javac TicTacToe.class (javac <source name>.java)
+#	2. Make a jar: jar cvfe TicTacToe.jar TicTacToe TicTacToe.class (jar <flags> <output name>.jar <default classpath> <files to shove in jar ... >)
+#	3. Run: java -jar TicTacToe
+#
+# (note: This version has a GUI but NO AI!)
+# (note: A Step by Step tutorial exists: http://www.instructables.com/id/Make-Tic-Tac-Toe-in-Java/)
+
+# III. C/C++
+# ==========
+# Install C Compiler (GCC):
+# 	1. Windows: Install MinGW (it's GCC, that includes gcc.exe and g++.exe for windows!) -- http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/mingw-get-inst-20120426.exe/download
+# 	2a. Linux(Apt): sudo apt-get install build-essential
+# 	2b. Linux(Yum): sudo yum groupinstall 'Development Tools'
+# 	3. Mac: Xcode -- https://developer.apple.com/xcode/
+#
+# Source Example:
+# 	1. http://www.cs.columbia.edu/~sable/summer2000/ttt.c
+#
+# Building/Execution:
+# 	1. Compile: gcc -o TTT TTT.c
+#	2. Run: TTT.exe OR ./TTT
+#
+# (Note: C++ code will have .cpp for source and is built with g++ inplace of gcc)
+
+###############################################################################
+#				OTHERS
+#PATH
+# This allows execution of binary files directly from Cmd/shell/etc
+#	1. Windows: XP -- http://support.microsoft.com/kb/310519; Vista+ -- Press Windows Button, Type "environment variables"
+#	2. Linux & Mac: http://www.cyberciti.biz/faq/unix-linux-adding-path/
