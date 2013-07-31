@@ -1,8 +1,8 @@
 % A Game Development Process: With Java, Git, and Tic-Tac-Toe
-% Phrasz
-% July 30, 2013
+% Version 1.0 by Phrasz
+% July 31, 2013
 
-<!-- pandoc -V geometry:paperwidth=8in -V geometry:paperheight=11in -V geometry:margin=1in Lab1_Java.mkd -o "Lab1 Java.pdf" --number-sections !-->
+<!-- pandoc -V geometry:paperwidth=8.5in -V geometry:paperheight=11in -V geometry:margin=1in Lab1_Java.mkd -o "Lab1 Java.pdf" --number-sections !-->
 
 Introduction
 ============
@@ -10,14 +10,479 @@ The following document will guide you through a step-by-step "game development p
 
 Prerequisite "Programs"
 =======================
-1. A Text Editor (I recommend [Notepad++]).
+1. A Text Editor (I recommend [Notepad++]). 
 2. [Java Development Kit 7]
 3. [Git Version Control System] for a VCS
 4. A [GitHub] account
 
+Please see Appendices A, B, and C for the install/setup/configuration of programs two through four.
+
+THE LAB
+=======
+The following section assumes that you have all the prerequisite programs installed, configured, and ready to use. Additionally, this lab will only use the programs that are installed to the PATH. Thus all the commands do NOT have full the path of execution (example: `"C:\Program Files (x86)\Notepad++\notepad++.exe"` is simply `notepad++`).
+
+Please note this lab tries to show by example and with pictures on the process of coding. You are NOT expected to fully understand all commands and actions taken. The primary objective is muscle memory in regards to coding practices.
+
 \pagebreak
 
-Appendix A: The PATH Environment Variable
+## Start your Command Prompt!
+The whole execution in the lab will occur on the command line (terminal for you Unix-like folks). Please start the "Run Prompt": Press (and hold) the Windows button while pressing R. Now type cmd.exe and press enter.
+
+![Run Prompt with cmd.exe typed](./images/17_CMD_Run.png)
+
+On Linux terminal may be started by pressing Ctrl+Alt+T, and Mac OSX can start terminal by searching for "terminal".
+
+Once started the prompt you should see something similar to the following:
+
+![Windows command shell started](./images/01_CMD_Line.png)
+
+Having this window open type the following command: `mkdir TicTacToe`. This will create a folder having the same name, and we must change directory to it by typing: `cd TicTacTie`. Also type: `explorer .` to open a folder directly where the command prompt is located.
+
+\pagebreak
+
+## "Git"ting Started
+The first step in creating a coding repository with git is to type: `git init`. Git will create a repository in a hidden directory called `.git`. This is where all the code updates and objects are stored. You can see a current status (in our case nothing should be there!) with the command: `git status`.
+
+## Create a simple Java file
+In this new folder create a new text file name TicTacToe. Java will blow up if you do not match the main method's name to the `<filename>.java` source file. You **must** change the .txt to .java in order to compile if you just made an ordinary text file. In command prompt type: `move TicTacToe.txt TicTacToe.java` (Linux and Mac Users will need to use *mv* vs *move*). Within the file place the following code:
+
+>```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+```
+
+Save the file and return to the command prompt. 
+
+## Saving files to the Git Repository
+Now type `git status`. Do you see a difference? It should list the new file as "untracked", so let's track it! Simply type: `git add *`. This will add ALL files in folder to be tracked! Once again type `git status` and note the differences! 
+
+Now we can finally `commit` these tracked changes to the Git repository. You can accomplish this by: `git commit -m "<enter your own message!>"`. At this point Git should list these changes. ADVANCED: you can see the GUI version of git by executing: `gitk`.
+
+## Creating a Remote Git Repository
+One of the best ways to save your data is by backing up the data on a cloud server. GitHub is one such service that works flawlessly with Git. Open up the website and log into your account. Please note that in the top right of the web page you can find the "create repository" button:
+
+![GitHub Create Repository Button](./images/13_GitHub_CreateRepo.png)
+
+\pagebreak
+
+This button will bring you to a new screen, which allows you (with three simple steps) to create an on-line Git repo:
+
+![GitHub Repository Creation in Three Steps](./images/14_GitHub_CreateRepo2.png)
+
+Feel free to modify the first two steps, BUT remember your changes! After you press the create button you should see the following screen:
+
+![GitHub New  Repository](./images/15_GitHub_NewCreated.png)
+
+GitHub has created a simple repo with no contents. This is the exact same process as we used in `git init`, however it is executed on the GitHub servers. At this point we can add this remote repository to our Git project; go back to the command prompt!
+
+\pagebreak
+
+## Adding a Remote GitHub Repository
+GitHub does a fantastic job at pre-building commands for Git repositories, however some of the commands are a bit hard to understand. Please refer to Figure 5 (or your GitHub web-page), and notice the section "Create a new repository on the command line". All the commands you need to add GitHub are here, yet we will be changing a specific command to make it more human readable. 
+
+The fifth command `"git remote add ..."` only needs one change. Remove the word `origin` and replace it with `GitHub`. On the command prompt type: `git remote add GitHub https://github.com/<username>/<repo name>.git`. This will now *link* your local Git repository to that of your GitHub account's repository.
+
+To actually send your repository to GitHub you will need one final command: `git push GitHub master`. By default all repositories save your code to the *master branch* in Git, therefore the above command tells Git to take your **master** branch and **push** it to the **remote** repository of **GitHub**
+
+## Take a Breather
+No really. Get up walk around, or go watch a funny [YouTube video].
+
+## Recap of Work Thus Far
+We made a Git repository to save our code, we added a quick snippet of Java, created a remote repository, committed our changes to be saved in Git, and finally pushed the repo to GitHub. Now let's finish out the rest of Tic Tac Toe.
+
+## The Rest of the Tic Tac Toe Code:
+Place the following the code into the same Java source file from above. **¡WARNING!** If you try to copy and paste the code as a single blob you will get the page numbers from the bottom of each page! This will BREAK the compilation. Please give mad props to Blmaster[3] for making this very slick version of Tic-Tac-Toe.
+
+```java
+public class TicTacToe implements ActionListener {
+    final String VERSION = "1.0";
+	//Setting up ALL the variables 
+
+	JFrame window = new JFrame("Tic-Tac-Toe " + VERSION);
+
+	JMenuBar mnuMain = new JMenuBar();
+	JMenuItem mnuNewGame = new JMenuItem("New Game"),
+	mnuInstruction = new JMenuItem("Instructions"),
+	mnuExit = new JMenuItem("Exit"),
+	mnuAbout = new JMenuItem("About");
+
+	JButton btn1v1 = new JButton("Player vs Player"),
+	btn1vCPU = new JButton("Player vs CPU"),
+	btnBack = new JButton("<--back");
+	JButton btnEmpty[] = new JButton[10];
+
+	JPanel pnlNewGame = new JPanel(),
+	pnlNorth = new JPanel(),
+	pnlSouth = new JPanel(),
+	pnlTop = new JPanel(),
+	pnlBottom = new JPanel(),
+	pnlPlayingField = new JPanel();
+	JLabel lblTitle = new JLabel("Tic-Tac-Toe");
+	JTextArea txtMessage = new JTextArea();
+
+	final int winCombo[][] = new int[][] {
+		{1, 2, 3}, {1, 4, 7}, {1, 5, 9},
+		{4, 5, 6}, {2, 5, 8}, {3, 5, 7},
+		{7, 8, 9}, {3, 6, 9}
+		/*Horizontal Wins*/ /*Vertical Wins*/ /*Diagonal Wins*/
+	};
+	final int X = 412, Y = 268, color = 190;
+	boolean inGame = false;
+	boolean win = false;
+	boolean btnEmptyClicked = false;
+	String message;
+	int turn = 1;
+	int wonNumber1 = 1, wonNumber2 = 1, wonNumber3 = 1;
+
+	public TicTacToe(){ //Setting game properties and layout and sytle...
+		//Setting window properties:
+		window.setSize(X, Y);
+		window.setLocation(450, 260);
+		window.setResizable(false);
+		window.setLayout(new BorderLayout());
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		//Setting Panel layouts and properties
+		pnlNewGame.setLayout(new GridLayout(2, 1, 2, 10));
+		pnlNorth.setLayout(new FlowLayout(FlowLayout.CENTER));
+		pnlSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+		pnlNorth.setBackground(new Color(color-20, color-20, color-20));
+		pnlSouth.setBackground(new Color(color, color, color));
+
+		pnlTop.setBackground(new Color(color, color, color));
+		pnlNewGame.setBackground(Color.blue);
+
+		//Adding menu items to menu bar
+		mnuMain.add(mnuNewGame);
+		mnuMain.add(mnuInstruction);
+		mnuMain.add(mnuAbout);
+		mnuMain.add(mnuExit);//---->Menu Bar Complete
+
+		//Adding buttons to NewGame panel
+		pnlNewGame.add(btn1v1);
+		pnlNewGame.add(btn1vCPU);
+
+		//Adding Action Listener to all the Buttons and Menu Items
+		mnuNewGame.addActionListener(this);
+		mnuExit.addActionListener(this);
+		mnuInstruction.addActionListener(this);
+		mnuAbout.addActionListener(this);
+		btn1v1.addActionListener(this);
+		btn1vCPU.addActionListener(this);
+		btnBack.addActionListener(this);
+
+		//Setting up the playing field
+		pnlPlayingField.setLayout(new GridLayout(3, 3, 2, 2));
+		pnlPlayingField.setBackground(Color.black);
+		for(int i=1; i<=9; i++) {
+			btnEmpty[i] = new JButton();
+			btnEmpty[i].setBackground(new Color(220, 220, 220));
+			btnEmpty[i].addActionListener(this);
+			pnlPlayingField.add(btnEmpty[i]);
+		}
+		//Adding everything needed to pnlNorth and pnlSouth
+		pnlNorth.add(mnuMain);
+		pnlSouth.add(lblTitle);
+
+		//Adding to window and Showing window
+		window.add(pnlNorth, BorderLayout.NORTH);
+		window.add(pnlSouth, BorderLayout.CENTER);
+		window.setVisible(true);
+	}
+
+	//-------------------START OF ACTION PERFORMED CLASS-------------------------//
+	public void actionPerformed(ActionEvent click){
+		Object source = click.getSource();
+		for(int i=1; i<=9; i++){
+			if(source == btnEmpty[i] && turn < 10){
+				btnEmptyClicked = true;
+				if(!(turn % 2 == 0))
+					btnEmpty[i].setText("X");
+				else
+					btnEmpty[i].setText("O");
+				btnEmpty[i].setEnabled(false);
+				pnlPlayingField.requestFocus();
+				turn++;
+			}
+		}
+		if(btnEmptyClicked){
+			checkWin();
+			btnEmptyClicked = false;
+		}
+		if(source == mnuNewGame) {
+			clearPanelSouth();
+			pnlSouth.setLayout(new GridLayout(2, 1, 2, 5));
+			pnlTop.add(pnlNewGame);
+			pnlBottom.add(btnBack);
+			pnlSouth.add(pnlTop);
+			pnlSouth.add(pnlBottom);
+
+		}
+		else if(source == btn1v1){
+			if(inGame){
+				int option = JOptionPane.showConfirmDialog(null,
+				"If you start a new game," + "your current game will be lost..." +
+				"\n" + "Are you sure you want to continue?",
+				"Quit Game?" ,JOptionPane.YES_NO_OPTION);
+				if(option == JOptionPane.YES_OPTION){
+					inGame = false;
+				}
+			}
+			if(!inGame){
+				btnEmpty[wonNumber1].setBackground(new Color(220, 220, 220));
+				btnEmpty[wonNumber2].setBackground(new Color(220, 220, 220));
+				btnEmpty[wonNumber3].setBackground(new Color(220, 220, 220));
+				turn = 1;
+				for(int i=1; i<10; i++){
+					btnEmpty[i].setText("");
+					btnEmpty[i].setEnabled(true);
+				}
+			win = false;
+			showGame();
+
+			}
+		}
+		else if(source == btn1vCPU) {
+			JOptionPane.showMessageDialog(null, "Coming Soon!!");
+		}
+		else if(source == mnuExit){
+			int option = JOptionPane.showConfirmDialog(null,
+			"Are you sure you want to exit?",
+			"Exit Game" ,JOptionPane.YES_NO_OPTION);
+			if(option == JOptionPane.YES_OPTION)
+				System.exit(0);
+		}
+		else if(source == mnuInstruction || source == mnuAbout){
+			clearPanelSouth();
+			String message = "";
+			txtMessage.setBackground(new Color(color, color, color));
+			if(source == mnuInstruction){
+				message = "Instructions:\n\n" + 
+				"Your goal is to be the first player to get 3 X's or O's in a\n" +
+				"row. (horizontally, diagonally, or vertically)";
+			} else {
+				message = "About:\n\n" +
+				"Title: Tic-Tac-Toe\n" +
+				"Author: Blmaster\n" +
+				"Version: " + VERSION + "\n";
+			}
+			txtMessage.setEditable(false);
+			txtMessage.setText(message);
+			pnlSouth.setLayout(new GridLayout(2, 1, 2, 5));
+			pnlTop.add(txtMessage);
+			pnlBottom.add(btnBack);
+			pnlSouth.add(pnlTop);
+			pnlSouth.add(pnlBottom);
+		}
+		else if(source == btnBack){
+			if(inGame)
+				showGame();
+			else {
+				clearPanelSouth();
+				pnlSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
+				pnlNorth.setVisible(true);
+				pnlSouth.add(lblTitle);
+			}
+		}
+		pnlSouth.setVisible(false);
+		pnlSouth.setVisible(true);
+	}
+	//-------------------END OF ACTION PERFORMED CLASS-------------------------//
+
+	/*
+	----------------------------------
+	Start of all the other methods. |
+	----------------------------------
+	*/
+	public void showGame(){ // Shows the Playing Field
+		// *IMPORTANT*- Does not start out brand new 
+		//             (meaning just shows what it had before)
+		clearPanelSouth();
+		inGame = true;
+		pnlSouth.setLayout(new BorderLayout());
+		pnlSouth.add(pnlPlayingField, BorderLayout.CENTER);
+		pnlPlayingField.requestFocus();
+	}
+
+	public void checkWin(){ 
+		// checks if there are 3 symbols in a row vertically,
+		// diagonally, or horizontally. then shows a message
+		// and disables buttons.
+		
+		for(int i=0; i<7; i++){
+			if(
+			!btnEmpty[winCombo[i][0]].getText().equals("") &&
+			btnEmpty[winCombo[i][0]].getText().equals(btnEmpty[winCombo[i][1]].getText()) &&
+			btnEmpty[winCombo[i][1]].getText().equals(btnEmpty[winCombo[i][2]].getText())
+				/*
+				The way this checks the if someone won is:
+				First: it checks if the btnEmpty[x] is not equal to an empty string
+				x being the array number inside the multi-dimensional
+				array winCombo[checks inside each of the 7 sets][the first number].
+				
+				Second: it checks if btnEmpty[x] is equal to btnEmpty[y]
+				x being winCombo[each set][the first number]
+				y being winCombo[each set the same as x][the second number]
+				
+				(So basically checks if the first and second number in each 
+				set is equal to each other)
+				
+				Third: it checks if btnEmtpy[y] is equal to btnEmpty[z]
+				y being the same y as last time
+				z being winCombo[each set as y][the third number]
+				
+				Conclusion: So basically it checks if it is equal to 
+				the btnEmpty is equal to each set of numbers
+				*/
+			){
+				win = true;
+				wonNumber1 = winCombo[i][0];
+				wonNumber2 = winCombo[i][1];
+				wonNumber3 = winCombo[i][2];
+				btnEmpty[wonNumber1].setBackground(Color.white);
+				btnEmpty[wonNumber2].setBackground(Color.white);
+				btnEmpty[wonNumber3].setBackground(Color.white);
+				break;
+			}
+		}
+		if(win || (!win && turn>9)){
+			if(win){
+				if(turn % 2 == 0)
+					message = "X has won!";
+				else
+					message = "O has won!";
+				win = false;
+			} else if(!win && turn>9){
+				message = "Both players have tied!\nBetter luck next time.";
+			}
+			JOptionPane.showMessageDialog(null, message);
+			for(int i=1; i<=9; i++){
+				btnEmpty[i].setEnabled(false);
+			}
+		}
+	}
+
+	public void clearPanelSouth(){ //Removes all the possible panels
+		//that pnlSouth, pnlTop, pnlBottom
+		//could have.
+		pnlSouth.remove(lblTitle);
+		pnlSouth.remove(pnlTop);
+		pnlSouth.remove(pnlBottom);
+		pnlSouth.remove(pnlPlayingField);
+		pnlTop.remove(pnlNewGame);
+		pnlTop.remove(txtMessage);
+		pnlBottom.remove(btnBack);
+	}
+
+	public static void main(String[] args){
+		new TicTacToe();// Calling the class construtor.
+	}
+}
+```
+
+\pagebreak
+
+## The Moment of Truth: Compiling TicTacToe
+Finally, we can try to actually compile this Java source with the javac compiler. Simply type: `javac TicTacToe.java`. There is an old adage with coding and compiling: *"No news is good news!"*.
+
+If something like the following figure shows up you are in trouble:
+
+![Javac Compile Errors](./images/18_javac_error.png)
+
+This shows that there are compiler issues regarding the syntax and improper code. Welcome to the world, and pain, that are syntax errors. Look at the line numbers given and try to determine what went wrong. As good or bad as Alice is you never have to deal with such errors!
+
+## Running the Game
+I'm sure you REALLY want to stop coding and start playing Tic-Tac-Toe. Let's make sure the game was compiled, thus type: `dir` (`ls` for you Linux/Mac guys). Do you see a TicTacToe.class file? That is the bytecode generated from the source code, which can be executed with the Java Runtime Engine. So fire it up! Type the following command: `java TicTacToe`. If the game was properly compiled you should see this:
+
+![Tic-Tac-Toe First Started](./images/19_TTT_start.png)
+
+Play a game or ten and see how it executes:
+
+![Tic-Tac-Toe X Wins!](./images/20_TTT_game.png)
+
+## Let's "Git" Out of Here!
+Before the lab completes we need to make sure we back up the files to the local and remote Git repository! Yet again type: `git add *` (verify with `git status`), and then commit the changes: `git commit -m "<more epic message than last time>"`.
+As a fun distraction see how the commit history looks like with the Git GUI: execute `gitk` on the command line. Notice both commits? The changes in green?\
+
+Before finishing the lab send your files to your GitHub repo: `git push GitHub master`. Verify the files were sent to GitHub. If all files have been committed you are set! Congratulations!
+
+Before you run away...
+======================
+As some food for thought before you run away screaming please take a moment to review this very brief look at a "game development process". Coding is NOT easy. You probably notices many issues with the installation, configuration, and execution of some, if not all, of the tools. I must state that to get better at coding you need to practice. A lot. Like 10,000 hours. Then you will become an expert. However, you should have seen very simple ways to help you code: 1) Command Line (after proper set up) is lightning fast with javac and git, 2) GitHub makes remote backups and sharing code with friends a snap, and 3) PATH can be greatly leveraged to navigate your computer and start programs on the fly. I hope you learned at least ONE thing, and I greatly encourage you to continue down this track of game development. Have fun and cheers to work well done!
+
+\pagebreak
+
+Appendix A: Installing the Java Development Kit (JDK)
+=====================================================
+## The JDK Website
+The JDK is available for download from Oracle's website here: [Java Development Kit 7].
+It should look like the following figure:
+
+![Java Website](./images/03_Java_WebsiteDownload.png)
+
+Please note that you need to accept the license agreement (1.) before you are able to download the file (2.):
+
+![Download Agreement](./images/04_Java_Website_Agreement_Highlight.png)
+
+\pagebreak
+
+## The JDK Installer
+The JDK installer is semi-automated and will ask for occasion user input (install directory, shortcuts, etc). Follow the directions, and leave the default settings.
+
+![JDK Installer](./images/05_Java_Installer.png)
+
+If you try to bring up commandline/terminal and execute `java -version` and see the following error please reinstall:
+
+![JDK Installation Error](./images/02_Java_VersionError.png)
+
+Otherwise you should have the "version" information in front of you:
+
+![JDK Properly Installed](./images/06_Java_VersionCorrect.png)
+
+
+\pagebreak
+
+Appendix B: Installing Git
+==========================
+## The Git Website
+The JDK is available for download from Oracle's website here: [Git Version Control System].
+It should look like the following figure:
+
+![Git Website](./images/08_Git_WebsiteDownload.png)
+
+## The Git Installer
+The Git installer is semi-automated and will ask for occasion user input (install directory, shortcuts, etc). Follow the directions, and please note the two figures for specialized options.
+
+![Git Installer](./images/09_Git_Installler.png)
+
+\pagebreak
+
+### The Git Installer Options
+
+![Git Option Setting 1](./images/10_Git_Installler_Opt_1.png)
+
+![Git Option Setting 2](./images/11_Git_Installler_Opt_2.png)
+
+\pagebreak
+
+Appendix C: GitHub
+==========================
+## The GitHub Website
+GitHub is a free online storage for Git repositories. Please go to the website and sign up for an account
+
+![GitHub Registration Page](./images/16_GitHub_Splash.png)
+
+When you access the website and sign in it should look like the following figure:
+
+![GitHub when signed in](./images/12_GitHub_MainPage.png)
+
+\pagebreak
+
+Appendix D: The PATH Environment Variable
 =========================================
 ## Operating System Environment Variables
 > "Environment variables are a set of dynamic named values that can affect the way running processes will behave on a computer. They are part of the operating environment in which a process runs.  They were introduced in their modern form in 1979 with Version 7 Unix, so are included in all Unix operating system flavors and variants from that point onward including Linux and OS X. From PC DOS 2.0 in 1982, all succeeding Microsoft operating systems including Microsoft Windows, and OS/2 also have included them as a feature, although with somewhat different syntax, usage and standard variable names."
@@ -26,11 +491,37 @@ Appendix A: The PATH Environment Variable
 ## The "PATH" Environment Variables
 > "PATH is an environment variable on Unix-like operating systems, DOS, OS/2, and Microsoft Windows, specifying a set of directories where executable programs are located. In general, each executing process or user session has its own PATH setting."
 -- Wikipedia [2]
+
+## Why Use PATH?
+The PATH system variable is the FIRST place an Operating System will look for executable files. In turn this means that you can simply add desired programs that can be "directly" excuted. For instance: Notepad++ is installed, by default, to `"C:\Program Files (x86)\Notepad++\notepad++.exe"` on 64 bit Windows. When placed on the PATH you can simply start the program from commandline:
+
+![Notepad++ Added to Windows PATH Variable](./images/07_Windows_PATH.png)
+
+\pagebreak
+
+Appendix E: Storing Java programs in a Jar
+==========================================
+Ever seen a Java program get passed around as a .class file? Liar! If you have seen a Java program chances are really good you saw a "Jar" file (.jar extension). One of the most common jar files out there for video games is Minecraft.jar home to the wonderful game "Minecraft".
+
+## What is a Jar?
+A glorified zip file. Don't believe me? Find a jar file and change the extension from .jar to .zip. Attempt to extract the file. Did it work?
+
+## Why would we Jar Java code? That .class file worked!
+With this lab we made a simple output of a class file that had no input files/graphics/sounds. Image if you would the THOUSANDS of files needed in a standard video game. Have you ever had to download all of these individual files? I didn't think so! 
+
+## A quick "How To"
+To "jar" a file you haveto use the jar tool with the following format: Make a jar:  `jar <flags> <output name>.jar <default classpath> <files to shove in jar ... >`. In our case we only have one file, which is the TicTacToe.class. This file can be very quickly added with: `jar cvfe TicTacToe.jar TicTacToe TicTacToe.class`. Compare and contrast the former and aft commands and see if you can identify each parts.
+
+## Why doesn't java <jar name> work!?
+When you placed the file(s) into the jar it changed the way java must interact with the file. In order to start a jar file you must now use the format: `java -jar <name of file>.jar`. This informs java that it must look at the file as a jar.
+
+
 \vfill
 
-
-
 [![Creative Commons License](./images/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/)  All work is under a Creative Commons BY-NC-SA 3.0 License
+
+
+<!-- Formatting !-->
 
 
 <!-- Links !-->
@@ -38,7 +529,9 @@ Appendix A: The PATH Environment Variable
 [Java Development Kit 7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [Git Version Control System]: http://git-scm.com/downloads
 [GitHub]: https://www.github.com
+[YouTube video]: http://www.youtube.com/watch?v=oHg5SJYRHA0
 
 <!-- Works Cited !-->
 [1]:http://en.wikipedia.org/wiki/Environment_variable
 [2]:http://en.wikipedia.org/wiki/PATH_(variable)
+[3]:http://forum.codecall.net/topic/43209-java-source-code-tic-tac-toe-game/

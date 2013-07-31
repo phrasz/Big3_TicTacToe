@@ -23,7 +23,7 @@
 #	1. http://forum.codecall.net/topic/43209-java-source-code-tic-tac-toe-game/
 #
 # Building/Execution
-# 	1. Compile: javac TicTacToe.class (javac <source name>.java)
+# 	1. Compile: javac TicTacToe.java (javac <source name>.java)
 #	2. Make a jar: jar cvfe TicTacToe.jar TicTacToe TicTacToe.class (jar <flags> <output name>.jar <default classpath> <files to shove in jar ... >)
 #	3. Run: java -jar TicTacToe
 #
